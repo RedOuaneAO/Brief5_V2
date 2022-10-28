@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;500&display=swap');
+.pace {
+    display: none;
+}
+body{
+    font-family: 'Inconsolata', monospace;
+}
+
+.main-style {
+    min-height: 100vh;
+    background-size: 360px;
+    background-position: right bottom;
+}
+.gradient-col{
+    background: linear-gradient(#E94560,#0F3460);
+}
+
+.boBackcolor{
+    background-color:#fff;
+}
+.boBackcolor2{
+    background-color: #E94560;
+}
+
+.tasBackcol{
+    background-color: #0F3460;
+}
+
+
+
+
+
