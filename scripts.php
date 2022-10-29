@@ -8,50 +8,37 @@
     //ROUTING
     if(isset($_POST['save']))        saveTask();
     if(isset($_POST['update']))      updateTask();
-    if(isset($_POST['delete']))      deleteTask();
+    if(isset($_GET['id']))  {
+        $i=$_GET['id'];
+    deleteTask($i);
+};
     
 
-    function getTasks()
-    {
-        $sql="SELECT * FROM tasks;";
-        $result=mysqli($conn,$sql);
+    function getTasks($icon,$a) {
+        global $conn;
+
+        $sql="SELECT * FROM tasks where status_id =$a";
+        $result=mysqli_query($conn,$sql);
         while($row=mysqli_fetch_assoc($result)){
-            if($_POST['taskStatus'] = 1){
+            $i=$row['id'];
             echo '<button class="w-100 border-0 p-3 border-bottom text-start tasBackcol">
-            <div class="">
-                <i class=""></i>
-            </div>
             <div class="text-white-50">
-                <div class=""><i class="bi bi-check-circle text-teal-400 me-2"></i>$title</div>
+                <div class="">'.$icon.$row['title'].'</div>
                 <div class="ms-3">
-                    <div class="">#12 created in 2022-10-08</div>
+                    <div class="">'.$row['task_datetime'].'</div>
                     <div class=""
-                        title="It is not always necessary, but many times a short screencast (or at least a screenshot) says more than a thousand words. While working on MacOS you can use QuickTime Player for the purpose but there are plenty of tools available for other operating systems as well.">
-                        It is not always necessary, but many times a short scre...</div>
+                        title="">
+                        '.$row['description'].'</div>
                 </div>
                 <div class="mt-3 ms-3">
-                    <span class="p-1 px-2 rounded-3 text-white boBackcolor2">High</span>
-                    <span class="p-1 px-2 rounded-3 ms-2 text-danger boBackcolor">Bug</span>
+                    <span class="p-1 px-2 rounded-3 text-white boBackcolor2">'.$row['priority_id'].'</span>
+                    <span class="p-1 px-2 rounded-3 ms-2 text-danger boBackcolor">'.$row['type_id'].'</span>
                 </div>
             </div>
+            <div class="text-end"><a href="index.php?id='.$i.'"><i class="bi bi-trash text-danger-400"></i></a></div>
         </button>
        ';
-            }
-        }
-
-
-
-
-
-
-
-        // //CODE HERE
-        $title =$_POST['title'];
-        $tasks =$_POST['title'];
-        $priority =$_POST['title'];
-        $date=$_POST['title'];
-        $description =$_POST['title'];
-        //SQL SELECT
+            }  
         // echo "Fetch all tasks";
     }
 
@@ -81,12 +68,14 @@
 // 		header('location: index.php');
 //     }
 
-//     function deleteTask()
-//     {
-//         //CODE HERE
-//         //SQL DELETE
-//         $_SESSION['message'] = "Task has been deleted successfully !";
-// 		header('location: index.php');
-//     }
+function deleteTask($i) {
+        //CODE HERE
+        global $conn;
+        $Delete="DELETE FROM tasks WHERE id=$i";
+        mysqli_query($conn,$Delete);
+        //SQL DELETE
+        $_SESSION['message'] = "Task has been deleted successfully !";
+		header('location: index.php');
+    }
 
-// ?>
+?>
