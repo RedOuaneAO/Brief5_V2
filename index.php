@@ -33,8 +33,7 @@
 				<div class="col-6">
 					<ol class=" list-unstyled breadcrumb">
 						<!--to make list items side by side -->
-						<li class="breadcrumb-item"><a class="text-decoration-none text-white"
-								href="javascript:;">Home</a></li>
+						<li class="breadcrumb-item"><a class="text-decoration-none text-white" href="javascript:;">Home</a></li>
 						<li class="breadcrumb-item active">Scrum Board </li>
 					</ol>
 					<!-- BEGIN page-header -->
@@ -55,14 +54,14 @@
 				</div>
 
 				<div class="col-6 text-end mt-5 mb-5">
-					<button class="text-white boBackcolor2 rounded-pill border-0 p-2 px-3 " data-bs-toggle="modal" data-bs-target="#modal-task"><i
+					<button class="text-white boBackcolor2 rounded-pill border-0 p-2 px-3 " data-bs-toggle="modal" data-bs-target="#modal-task" id="addTaskBtn"><i
 							class="bi bi-plus-lg "></i> Add Task</button>
 				</div>
 			</div>
 			<div class="row ">
 				<div class="mb-4 col-md-4 col-sm-6">
 					<div class=" p-2 rounded-top gradient-col">
-						<h4 class="text-white">To do (<span id="to-do-tasks-count">5</span>)</h4>
+						<h4 class="text-white">To do (<span id="to-do-tasks-count"><?php taskCounter(1)?></span>)</h4>
 					</div>
 					<div id="to-do-tasks">
 						<!-- TO DO TASKS HERE -->
@@ -71,13 +70,11 @@
 							getTasks($icon,1);
 						?>
 					</div>
-
 				</div>
 				<div class="mb-4 col-md-4 col-sm-6">
 					<div class="">
 						<div class="p-2 rounded-top gradient-col">
-							<h4 class="text-white">In Progress (<span id="in-progress-tasks-count">4</span>)</h4>
-
+							<h4 class="text-white">In Progress (<span id="in-progress-tasks-count"><?php taskCounter(2)?></span>)</h4>
 						</div>
 						<div id="in-progress-tasks">
 							<!-- IN PROGRESS TASKS HERE -->
@@ -91,8 +88,7 @@
 				<div class="col-md-4 col-sm-6">
 					<div class="">
 						<div class="gradient-col p-2 rounded-top" >
-							<h4 class="text-white">Done (<span id="done-tasks-count">4</span>)</h4>
-
+							<h4 class="text-white">Done (<span id="done-tasks-count"><?php taskCounter(3)?></span>)</h4>
 						</div>
 						<div id="done-tasks">
 							<!-- DONE TASKS HERE -->
@@ -126,43 +122,45 @@
 				  </div>
 				  <div class="modal-body tasBackcol text-white">
 					<form  id="formId" action="scripts.php" method="POST">
-					<label >Title</label><br> 
-					<input id="titleId" class="form-control mt-1" type="text" name="title"><br>						<!--form-control : let the input bar take 100 of the width-->
-					<label class="mt-1">Type</label><br>
-					<div class="d-flex mt-2" >
-						<div class="ms-4">
-							<input class="form-check-input"  id="feature" type="radio" name="taskType" value="1" checked><label class="ms-2" for="feature">Feature</label>
-						</div><br>
-						<div class="ms-5">
-							<input class="form-check-input" id="bug" type="radio" name="taskType" value="2" ><label class="ms-2 " for="bug">Bug</label>
-						</div><br>
-					</div>
-					<label class="mt-2">Priority</label><br>
-                    <select id="prt" class=" mt-1 form-select " name="taskPrio">										<!--form-select : to let the select bar take 100 of the width-->
-						<option class="fw-bold" disabled selected value="">Please select</option>
-                        <option class="fw-bold" value="1">High</option>
-                        <option class="fw-bold" value="2">Medium</option>
-                        <option class="fw-bold" value="3">Low</option>
-						<option class="fw-bold" value="4">Critical</option>
-                    </select><br>
-					<label class="mt-1">Status</label><br>
-                    <select id="stt" class="form-select  mt-1" name="taskStatus">              
-						<option class="fw-bold" selected disabled value="">Please select</option>
-                        <option class="fw-bold" value="1">To Do</option>
-                        <option class="fw-bold" value="2">In Progress</option>
-                        <option class="fw-bold" value="3">Done</option>
-                    </select><br>
-					<label class="mt-1">Date</label><br>
-                    <input id="date" class="form-control mt-1" type="date" name="taskDate"><br>						
-                    <label class="mt-1">Description</label><br>
-                    <textarea id="desc" class="w-100 p-4 mt-1" name="taskDescrip"></textarea>
-					<div class="modal-footer tasBackcol border-top-0">
-				 		<button type="button" class="btn btn-white text-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-						<button type="submit" name="save" class="btn btn-danger" id="saveBtn" data-bs-dismiss="modal">Save</button>
-				  </div>
+						<!-- for update -->
+						<input type="text" name="id" hidden id="task-id"/>
+						<!-- for update -->
+						<label >Title</label><br> 
+						<input id="titleId" class="form-control mt-1" type="text" name="title" required><br>						<!--form-control : let the input bar take 100 of the width-->
+						<label class="mt-1">Type</label><br>
+						<div class="d-flex mt-2" >
+							<div class="ms-4">
+								<input class="form-check-input"  id="feature" type="radio" name="taskType" value="1"><label class="ms-2" for="feature">Feature</label>
+							</div><br>
+							<div class="ms-5">
+								<input class="form-check-input" id="bug" type="radio" name="taskType" value="2" ><label class="ms-2 " for="bug">Bug</label>
+							</div><br>
+						</div>
+						<label class="mt-2">Priority</label><br>
+						<select id="prt" class=" mt-1 form-select " name="taskPrio">										<!--form-select : to let the select bar take 100 of the width-->
+							<option class="fw-bold" disabled selected value="">Please select</option>
+							<option class="fw-bold" value="1">High</option>
+							<option class="fw-bold" value="2">Medium</option>
+							<option class="fw-bold" value="3">Low</option>
+							<option class="fw-bold" value="4">Critical</option>
+						</select><br>
+						<label class="mt-1">Status</label><br>
+						<select id="stt" class="form-select  mt-1" name="taskStatus" required>              
+							<option class="fw-bold" selected disabled value="">Please select</option>
+							<option class="fw-bold" value="1">To Do</option>
+							<option class="fw-bold" value="2">In Progress</option>
+							<option class="fw-bold" value="3">Done</option>
+						</select><br>
+						<label class="mt-1">Date</label><br>
+						<input id="date" class="form-control mt-1" type="date" name="taskDate" required><br>						
+						<label class="mt-1">Description</label><br>
+						<textarea id="desc" class="w-100 p-4 mt-1" name="taskDescrip" required></textarea>
+						<div class="modal-footer tasBackcol border-top-0" id="footerId">
+							<button type="button" class="btn btn-white text-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+							<button type="submit" name="save" class="btn btn-danger" id="saveBtn" data-bs-dismiss="modal">Save</button>
+						</div>
 				</form>
-				  </div>
-				 
+				  </div>	 
 				</div>
 			  </div>
         </div>
@@ -171,8 +169,54 @@
 	<!-- ================== BEGIN core-js ================== -->
 	<script src="assets/js/vendor.min.js"></script>
 	<script src="assets/js/app.min.js"></script>
-	<script src="assets/js/data.js"></script>
-	<script src="assets/js/app.js">	</script>
+
+	<script>
+	function popUp(id){
+		$('#modal-task').modal('show');
+		var id_input = document.getElementById("task-id");
+		id_input.value = id;
+		var titleInput = document.getElementById("titleId");
+		var priorityInput = document.getElementById("prt");
+		var statusInput = document.getElementById("stt");
+		var dateInput = document.getElementById("date");
+		var descriptionInput = document.getElementById("desc");
+
+		var title = document.getElementById(id).querySelector('.task-title').innerHTML;
+		titleInput.value=title;
+
+		var date = document.getElementById(id).querySelector('.task-date').innerHTML;
+		dateInput.value=date;
+
+		var description = document.getElementById(id).querySelector('.task-description').getAttribute('title');
+		descriptionInput.value=description;
+
+		var type = document.getElementById(id).querySelector('.task-type').innerHTML;
+		if(type=="Feature")feature.checked=true;
+		else bug.checked=true;
+		
+		var priority = document.getElementById(id).querySelector('.task-priority').innerHTML;
+		if(priority=='High') priority=1
+		if(priority=='Medium') priority=2
+		if(priority=='Low') priority=3
+		if(priority=='Critical') priority=4
+		priorityInput.value=priority;
+
+		var status = document.getElementById(id).querySelector('.task-class').getAttribute('taskStatus');
+		if(status=='To Do')status=1;
+		if(status=='In Progress')status=2;
+		if(status=='Done')status=3;
+		statusInput.value=status;
+
+		document.getElementById('footerId').innerHTML='<button type="button" class="btn btn-white text-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button> <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="update">Update</button> '
+
+		
+
+	}
+
+	
+   
+
+	</script>
 	<!-- ================== END core-js ================== -->
 </body>
 
