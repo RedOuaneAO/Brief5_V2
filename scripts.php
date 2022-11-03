@@ -6,16 +6,15 @@
     session_start();
 
     //ROUTING
-    if(isset($_POST['save']))        saveTask();
-    if(isset($_POST['update']))      updateTask();    
-    if(isset($_GET['id']))  {   $i=$_GET['id'];     deleteTask($i); };
+    if(isset($_POST['save']))       saveTask();
+    if(isset($_POST['update']))     updateTask();    
+    if(isset($_GET['id']))          deleteTask();
   
 /*-----------------------------------------------------------------getFunction---------------------------------------------------*/
 
 function getTasks($icon,$tabNum) {
-             global $conn;
-        
-            $inner="SELECT tasks.id, tasks.title, tasks.status_id, types.name AS typeTitle ,priorities.name AS priorityTitle, tasks.task_datetime,
+        global $conn;
+        $inner="SELECT tasks.id, tasks.title, tasks.status_id, types.name AS typeTitle ,priorities.name AS priorityTitle, tasks.task_datetime,
             tasks.description FROM  tasks  INNER JOIN types  ON tasks.type_id = types.id
            INNER JOIN priorities ON tasks.priority_id = priorities.id WHERE status_id =$tabNum";
         $result=mysqli_query($conn,$inner);
@@ -45,7 +44,6 @@ function getTasks($icon,$tabNum) {
         </button>
        ';
             }  
-        echo "Fetch all tasks";
     }
 
 /*-----------------------------------------------------------------saveFunction---------------------------------------------------*/
@@ -69,9 +67,10 @@ function saveTask(){
 
 
 /*-----------------------------------------------------------------deleteFunction---------------------------------------------------*/
-function deleteTask($i) {
+function deleteTask() {
         //CODE HERE
         global $conn;
+        $i=$_GET['id'];
         $Delete="DELETE FROM tasks WHERE id=$i";
         mysqli_query($conn,$Delete);
         //SQL DELETE
@@ -101,12 +100,14 @@ function updateTask(){
 		header('location: index.php');
     }
 
+/*-----------------------------------------------------------------CountingTaskFunction---------------------------------------------------*/
+
 function taskCounter($tabNum){
         global $conn;
         $sql="SELECT * FROM tasks where status_id=$tabNum";
         if ($result=mysqli_query($conn,$sql)){
         $rowcount=mysqli_num_rows($result);
-        printf("%d",$rowcount);
+        echo $rowcount;
         }
     }
 

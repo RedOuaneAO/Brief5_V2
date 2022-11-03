@@ -48,13 +48,13 @@
 						unset($_SESSION['message']);
 					?>
 					<button type="button" class="btn-close" data-bs-dismiss="alert"></span>
-				</div>
-			<?php endif ?>
+					</div>
+						<?php endif ?>
 					<!-- END page-header -->
-				</div>
+					</div>
 
 				<div class="col-6 text-end mt-5 mb-5">
-					<button class="text-white boBackcolor2 rounded-pill border-0 p-2 px-3 " data-bs-toggle="modal" data-bs-target="#modal-task" id="addTaskBtn"><i
+					<button class="text-white boBackcolor2 rounded-pill border-0 p-2 px-3 " data-bs-toggle="modal" data-bs-target="#modal-task" id="addTaskBtn" onclick="resetForm()"><i
 							class="bi bi-plus-lg "></i> Add Task</button>
 				</div>
 			</div>
@@ -130,7 +130,7 @@
 						<label class="mt-1">Type</label><br>
 						<div class="d-flex mt-2" >
 							<div class="ms-4">
-								<input class="form-check-input"  id="feature" type="radio" name="taskType" value="1"><label class="ms-2" for="feature">Feature</label>
+								<input class="form-check-input"  id="feature" type="radio" name="taskType" value="1" checked><label class="ms-2" for="feature">Feature</label>
 							</div><br>
 							<div class="ms-5">
 								<input class="form-check-input" id="bug" type="radio" name="taskType" value="2" ><label class="ms-2 " for="bug">Bug</label>
@@ -158,6 +158,7 @@
 						<div class="modal-footer tasBackcol border-top-0" id="footerId">
 							<button type="button" class="btn btn-white text-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
 							<button type="submit" name="save" class="btn btn-danger" id="saveBtn" data-bs-dismiss="modal">Save</button>
+							<button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="update" id="updateId">Update</button>
 						</div>
 				</form>
 				  </div>	 
@@ -169,54 +170,7 @@
 	<!-- ================== BEGIN core-js ================== -->
 	<script src="assets/js/vendor.min.js"></script>
 	<script src="assets/js/app.min.js"></script>
-
-	<script>
-	function popUp(id){
-		$('#modal-task').modal('show');
-		var id_input = document.getElementById("task-id");
-		id_input.value = id;
-		var titleInput = document.getElementById("titleId");
-		var priorityInput = document.getElementById("prt");
-		var statusInput = document.getElementById("stt");
-		var dateInput = document.getElementById("date");
-		var descriptionInput = document.getElementById("desc");
-
-		var title = document.getElementById(id).querySelector('.task-title').innerHTML;
-		titleInput.value=title;
-
-		var date = document.getElementById(id).querySelector('.task-date').innerHTML;
-		dateInput.value=date;
-
-		var description = document.getElementById(id).querySelector('.task-description').getAttribute('title');
-		descriptionInput.value=description;
-
-		var type = document.getElementById(id).querySelector('.task-type').innerHTML;
-		if(type=="Feature")feature.checked=true;
-		else bug.checked=true;
-		
-		var priority = document.getElementById(id).querySelector('.task-priority').innerHTML;
-		if(priority=='High') priority=1
-		if(priority=='Medium') priority=2
-		if(priority=='Low') priority=3
-		if(priority=='Critical') priority=4
-		priorityInput.value=priority;
-
-		var status = document.getElementById(id).querySelector('.task-class').getAttribute('taskStatus');
-		if(status=='To Do')status=1;
-		if(status=='In Progress')status=2;
-		if(status=='Done')status=3;
-		statusInput.value=status;
-
-		document.getElementById('footerId').innerHTML='<button type="button" class="btn btn-white text-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button> <button type="submit" class="btn btn-danger" data-bs-dismiss="modal" name="update">Update</button> '
-
-		
-
-	}
-
-	
-   
-
-	</script>
+	<script src="scripts.js"></script>
 	<!-- ================== END core-js ================== -->
 </body>
 
